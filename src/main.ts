@@ -13,7 +13,7 @@ async function bootstrap() {
     .build();
 
     const doc = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('proxy-target', app, doc);
+    SwaggerModule.setup('proxy-source', app, doc);
   await app.listen(3000);
 }
 bootstrap();
