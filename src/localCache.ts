@@ -35,8 +35,9 @@ class LocalCache{
                 const keyIndex = this.currentKeys.indexOf(key);
                 this.currentKeys.splice(keyIndex, 1);
                 return await this.cache.delete(key);
+            } else {
+                return await this.cache.set(key, value);
             }
-            return await this.cache.set(key, value);
         } catch (e) {
             throw e;
         }
