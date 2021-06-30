@@ -27,18 +27,21 @@ class LocalCache{
         }
     }
 ​
-    async set(key: string, value: any){
+    async set(key: string, value: any): Promise<boolean>{
+        console.log("🚀 ~ file: localCache.ts ~ line 31 ~ LocalCache ~ set ~ value", value)
+        console.log("🚀 ~ file: localCache.ts ~ line 31 ~ LocalCache ~ set ~ key", key)
         try {
-            if(!this.currentKeys.includes(key) && value !== null){
-                this.currentKeys.push(key);
-            }else if (value === null){
+             if (value === null){
                 const keyIndex = this.currentKeys.indexOf(key);
                 this.currentKeys.splice(keyIndex, 1);
-                return await this.cache.delete(key);
+                const deleteResult =  await this.cache.delete(key).catch(err => console.error(err));
+                return !!deleteResult;
             } else {
-                return await this.cache.set(key, value);
+                const setResult = await this.cache.set(key, value).catch(err => console.error(err));
+                return !! setResult;
             }
         } catch (e) {
+            console.error(e);
             throw e;
         }
     }
